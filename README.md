@@ -21,32 +21,32 @@ The project is inspired by physical city-to-city portal installations and is int
 
 ### Streaming
 
-- [x] Live camera capture (WebRTC)
-- [x] Live video playback
-- [x] Stream ends immediately on disconnect
+- [ ] Live camera capture (WebRTC)
+- [ ] Live video playback
+- [ ] Stream ends immediately on disconnect
 - [ ] Audio support
 - [ ] Camera switching (front/back)
 
 ### Discovery & Map
 
-- [x] Interactive world map
-- [x] Real-time stream markers
-- [x] Click marker to join stream
+- [ ] Interactive world map
+- [ ] Real-time stream markers
+- [ ] Click marker to join stream
 - [ ] Zoom-based stream clustering
 - [ ] Region-based stream filtering
 
 ### Real-Time Systems
 
-- [x] WebSocket-based signaling
-- [x] Live stream lifecycle management
-- [x] Heartbeats / presence detection
+- [ ] WebSocket-based signaling
+- [ ] Live stream lifecycle management
+- [ ] Heartbeats / presence detection
 - [ ] Graceful reconnection handling
 - [ ] Multi-region signaling
 
 ### Backend & Infrastructure
 
-- [x] Node.js backend
-- [x] In-memory active stream state
+- [ ] Node.js backend
+- [ ] In-memory active stream state
 - [ ] Redis-backed pub/sub
 - [ ] TURN/STUN deployment
 - [ ] SFU support (P2P → SFU)
