@@ -1,65 +1,33 @@
-import { Session } from '@supabase/supabase-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from './supabase';
 
 interface AuthContextType {
-  session: Session | null;
+  session: any;
   user: any | null;
   loading: boolean;
-  isSigningIn: (idToken: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user || null);
-      setLoading(false);
-    });
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user || null);
-      setLoading(false);
-    });
-
-    return () => subscription?.unsubscribe();
+    // Bypass authentication - immediately set a dummy session
+    const dummySession = { authenticated: true };
+    const dummyUser = { id: 'temp-user', email: 'user@example.com' };
+    setSession(dummySession);
+    setUser(dummyUser);
+    setLoading(false);
   }, []);
-
-  const isSigningIn = async (idToken: string) => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signInWithIdToken({
-        provider: 'google',
-        token: idToken,
-      });
-
-      if (error) throw error;
-      console.log('Sign in successful:', data);
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const signOut = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      setSession(null);
+      setUser(null);
     } catch (error) {
       console.error('Sign out error:', error);
       throw error;
@@ -74,7 +42,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         session,
         user,
         loading,
-        isSigningIn,
         signOut,
       }}
     >
