@@ -13,6 +13,10 @@ export default function WelcomeScreen() {
 		router.replace('/(tabs)');
 	};
 
+	const handleCameraPress = () => {
+		router.push('/(tabs)/camera');
+	};
+
 	return (
 		<View style={[styles.container, { backgroundColor: colors.background }]}>
 			<View style={styles.content}>
@@ -29,6 +33,14 @@ export default function WelcomeScreen() {
 				>
 					<Text style={[styles.buttonText, { color: colors.background }]}>
 						Get Started
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={[styles.secondaryButton, { borderColor: colors.tint }]}
+					onPress={handleCameraPress}
+				>
+					<Text style={[styles.secondaryButtonText, { color: colors.tint }]}>
+						Go to Camera
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -68,8 +80,19 @@ const styles = StyleSheet.create({
 		paddingVertical: 16,
 		borderRadius: 8,
 		alignItems: 'center',
+		marginBottom: 12,
+	},
+	secondaryButton: {
+		paddingVertical: 16,
+		borderRadius: 8,
+		alignItems: 'center',
+		borderWidth: 2,
 	},
 	buttonText: {
+		fontSize: 16,
+		fontWeight: '600',
+	},
+	secondaryButtonText: {
 		fontSize: 16,
 		fontWeight: '600',
 	},

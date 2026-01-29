@@ -1,13 +1,15 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import * as Location from 'expo-location';
+import { useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
 
 export default function App() {
   const mapRef = useRef<MapView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const router = useRouter();
   const snapPoints = useMemo(() => ['10%', '50%', '90%'], []);
   
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
@@ -68,6 +70,14 @@ export default function App() {
         <BottomSheetView style={styles.contentContainer}>
           <Text style={styles.title}>Discover Streams</Text>
           <Text style={styles.subtitle}>Scroll to explore nearby live streams</Text>
+          
+          <TouchableOpacity style={styles.startStreamButton} onPress={() => router.push('/stream')}>
+            <Text style={styles.startStreamButtonText}>Start a Stream</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.backButton} onPress={() => router.push('auth/welcome')}>
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
         </BottomSheetView>
       </BottomSheet>
     </GestureHandlerRootView>
@@ -95,5 +105,30 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: '#666',
+    marginBottom: 20,
+  },
+  startStreamButton: {
+    backgroundColor: '#FF6B6B',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  startStreamButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  backButton: {
+    backgroundColor: '#999',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
